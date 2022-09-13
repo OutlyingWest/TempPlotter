@@ -18,7 +18,7 @@ def main():
 
     # Interface
     app = QApplication()
-    main_window = design.MainWindow()
+    main_window = design.MainWindow(sensors)
     main_window.show()
     app.exec()
 

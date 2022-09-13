@@ -71,8 +71,11 @@ class DataFrame:
 
             # Get data from tmp strig
             # TODO: try exept or rewrite regex
-            number = int(sensor_data_parts[1])
-            temp = float(sensor_data_parts[2])
+            try:
+                number = int(sensor_data_parts[1])
+                temp = float(sensor_data_parts[2])
+            except:
+                continue
 
             # If number of sensor not already exist
             if number not in sens_numbers:

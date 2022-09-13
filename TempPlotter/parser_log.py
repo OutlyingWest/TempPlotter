@@ -20,12 +20,6 @@ class DataFrame:
         self.sensors_data = []
         self.size = size
 
-    def set_path(self, path_to_log : str):
-        self.path_to_log = path_to_log
-
-    def get_path(self):
-        return self.path_to_log
-
     def _parse_log_strings(self, size) -> list:
         '''
         Returns list of strings with number of sensor and it's temperature 
@@ -40,11 +34,90 @@ class DataFrame:
                     strp_line = line.rstrip('\n ,')
                     splt_line = strp_line.split(', ')
                     self.sensors_data.extend(splt_line)
-        print(self.sensors_data)
+
+            return self.sensors_data
+
+    @staticmethod
+    def _get_unique_numbers(numbers):
+        unique = []
+        size = 0
+        for number in numbers:
+            if number not in unique:
+                unique.append(number)
+                size += 1
+            else:
+                return unique, size
+
+        return unique, size
+
+    def get_structured_data(self):
+        '''
+
+        '''
+        all_data = self._parse_log_strings(12)
+
+        # Numbers of different tmp sensors
+        sens_numbers = []
+
+        # Sensor instatces list
+        sensors = []
+
+        sensors_structured_data = dict()
+
+        for sensor_data in all_data:
+            sensor_data_parts = sensor_data.split(',')
+
+            # Get data from tmp strig
+            # TODO: try exept or rewrite regex
+            number = int(sensor_data_parts[1])
+            temp = float(sensor_data_parts[2])
+
+            # If number of sensor not already exist
+            if number not in sens_numbers:
+                sens_numbers.append(number)
+
+                # Create sensor instance
+                sensor_inst = TmpSensor(number)
+                sensors.append(sensor_inst)
+
+            for sensor in sensors:
+                if sensor.number == number:
+                    sensor.temp_list.append(temp)
+
+        for sensor in sensors:
+            print('sensor number = ', sensor.number)
+            print(sensor.temp_list, end='\n\n')
+
+
+
+                
+
+
+
+
+
+
+        unique_sensor_nums, unique_size = self._get_unique_numbers(sens_numbers)
+
+
+        return (unique_sensor_nums, unique_size)
+
+
+
+    def set_path(self, path_to_log : str):
+        self.path_to_log = path_to_log
+
+    def get_path(self):
+        return self.path_to_log
+
+    def get_sensors_data(self):
         return self.sensors_data
 
-    def get_sensors_data():
-        pass
+
+
+
+
+
         
 
 

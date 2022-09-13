@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>TempPlotter</Name>
     <RootNamespace>TempPlotter</RootNamespace>
+    <InterpreterId>Global|VisualStudio|venv</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,6 +25,10 @@
     <Compile Include="temp_plotter.py" />
     <Compile Include="parser_log.py" />
     <Compile Include="design.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.9" />
+    <InterpreterReference Include="Global|VisualStudio|venv" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

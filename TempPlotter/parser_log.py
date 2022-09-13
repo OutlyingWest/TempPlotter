@@ -3,7 +3,7 @@ import re
 
 class TmpSensor:
     '''
-    Data class contains number and buffer of temperatures
+        Data class contains number and buffer of temperatures
     '''
     def __init__(self, number : int):
         self.number = number
@@ -17,8 +17,11 @@ class DataFrame:
     '''
     def __init__(self, size : int):
         self.path_to_log = ''
+        # List of strings with sensor data
         self.sensors_data = []
         self.size = size
+        # List of sensor instances
+        self.sensors_structured_data = []
 
     def _parse_log_strings(self, size) -> list:
         '''
@@ -52,7 +55,8 @@ class DataFrame:
 
     def get_structured_data(self):
         '''
-
+        Return list of sensor instances contains
+        number of sensor and temperature measurements list
         '''
         all_data = self._parse_log_strings(12)
 
@@ -61,8 +65,6 @@ class DataFrame:
 
         # Sensor instatces list
         sensors = []
-
-        sensors_structured_data = dict()
 
         for sensor_data in all_data:
             sensor_data_parts = sensor_data.split(',')
@@ -84,25 +86,9 @@ class DataFrame:
                 if sensor.number == number:
                     sensor.temp_list.append(temp)
 
-        for sensor in sensors:
-            print('sensor number = ', sensor.number)
-            print(sensor.temp_list, end='\n\n')
+            self.sensors_structured_data = sensors
 
-
-
-                
-
-
-
-
-
-
-        unique_sensor_nums, unique_size = self._get_unique_numbers(sens_numbers)
-
-
-        return (unique_sensor_nums, unique_size)
-
-
+        return self.sensors_structured_data
 
     def set_path(self, path_to_log : str):
         self.path_to_log = path_to_log
@@ -112,6 +98,23 @@ class DataFrame:
 
     def get_sensors_data(self):
         return self.sensors_data
+
+    def show_sensors_data(self):
+        '''
+            Show disordered data frame
+        '''
+        print('data frame:\n', self.sensors_data, end='\n\n')
+
+    def show_sensors_structured_data(self):
+        '''
+            Show ordered data frame
+        '''
+        for sensor in self.sensors_structured_data:
+            print('sensor number = ', sensor.number)
+            print(sensor.temp_list, end='\n\n')
+
+
+
 
 
 

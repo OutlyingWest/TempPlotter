@@ -1,9 +1,12 @@
+import sys
 import matplotlib
 
 matplotlib.use('Qt5Agg')
 
-from PySide6.QtWidgets import QMainWindow
 from PySide6.QtWidgets import QVBoxLayout, QWidget
+from PySide6.QtWidgets import QMainWindow
+from PySide6 import QtCore             # QtGui.QWindow.closeEvent
+
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
@@ -24,7 +27,8 @@ class MplCanvas(FigureCanvasQTAgg):
 
         # Generate subplots instances list
         for n_plot in range(self.num_plots):
-            subplot = fig.add_subplot(self.num_plots, 1, n_plot+1,
+            number_of_plot = n_plot + 1
+            subplot = fig.add_subplot(self.num_plots, 1, number_of_plot,
                                       ylim=[0, 100],
                                       ylabel="Temp 'C",
                                       xlabel="sec",
@@ -66,3 +70,11 @@ class MainWindow(QMainWindow):
         widget = QWidget()
         widget.setLayout(layout)
         self.setCentralWidget(widget)
+
+        # Events
+        # self.QUITButton.clicked.connect(self.exit_button_click)
+
+
+    @QtCore.Slot()
+    def exit_button_click():
+        sys.exit()

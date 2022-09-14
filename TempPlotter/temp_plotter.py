@@ -1,9 +1,10 @@
+import sys
 from PySide6.QtWidgets import QApplication
 import parser_log as prs
 import design
 
 def main():
-    path = r'C:\Users\Alex\Work\Projects\Current Progects\VisualStudio\WaveFormsArr\Output stm32\putty.log'
+    path = r'C:\Users\Alex\Work\Projects\VisualStudio\TempPlotter\putty.log'
 
     # Creation of new data frame
     data_frame = prs.DataFrame(12)
@@ -13,15 +14,19 @@ def main():
 
     # Get and parse data from log
     sensors = data_frame.get_structured_data()
-    data_frame.show_sensors_data()
-    data_frame.show_sensors_structured_data()
+
+    # Show data in console
+    # data_frame.show_sensors_data()
+    # data_frame.show_sensors_structured_data()
+
+    prs.clean_data_saver(sensors)
 
     # Interface
     app = QApplication()
     main_window = design.MainWindow(sensors)
     main_window.show()
-    app.exec()
-
+    sys.exit(app.exec())
+    
 
 
 if __name__ == "__main__":

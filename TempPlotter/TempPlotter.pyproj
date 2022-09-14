@@ -25,6 +25,7 @@
     <Compile Include="temp_plotter.py" />
     <Compile Include="parser_log.py" />
     <Compile Include="design.py" />
+    <Compile Include="data_cleaner.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.9" />

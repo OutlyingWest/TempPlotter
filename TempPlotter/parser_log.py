@@ -8,6 +8,9 @@ class TmpSensor:
     def __init__(self, number : int):
         self.number = number
         self.temp_list = []
+        
+    def get_length_temp_list(self):
+        return len(self.temp_list)
 
 
 class DataFrame:
@@ -25,7 +28,7 @@ class DataFrame:
 
     def _parse_log_strings(self, size) -> list:
         '''
-        Returns list of strings with number of sensor and it's temperature 
+        Return list of strings with number of sensor and it's temperature 
         '''
 
         regex_sensor_num = r'(tmp,\d+,\d+\.\d+)'
@@ -115,6 +118,39 @@ class DataFrame:
         for sensor in self.sensors_structured_data:
             print('sensor number = ', sensor.number)
             print(sensor.temp_list, end='\n\n')
+
+
+def clean_data_saver(sensors : list):
+    '''
+        Get list of TmpSensor() class instances.
+        Create file with cleaned data if it isn't exist,
+        or rewrite it
+    '''
+    with open(r'C:\Users\Alex\Work\Projects\VisualStudio\TempPlotter\Data\tsensors1_cleaned.log',
+             'w', encoding='utf-8') as clean_data_file:
+        
+        lengths_sensors = []
+        for sensor in sensors: 
+            lengths_sensors.append(sensor.get_length_temp_list())
+
+        num_tick = 0
+        while num_tick <= 2500:
+            for n_sensor, sensor in enumerate(sensors):
+                length = lengths_sensors[n_sensor]
+                if num_tick < length:
+                    clean_data_file.write('%.2f    ' % sensor.temp_list[num_tick])
+                    print('%.2f    ' % sensor.temp_list[num_tick], end='')
+                else:
+                    clean_data_file.write(' ' * 6)
+                    print(' ' * 6, end='')
+                    break
+            num_tick += 1
+            clean_data_file.write('\n')
+            print('\n', end='')
+
+        
+
+
 
 
 
